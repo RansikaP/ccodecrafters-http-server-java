@@ -33,6 +33,7 @@ public class ServerHandler implements Runnable {
                 this.httpResponseText(body);
             } else if (parser.getRequestURL().startsWith("/files")) {
                 String file = parser.getRequestURL().substring(7);
+                System.out.println(file);
                 httpFileResponse(file);
             }
             else
@@ -49,7 +50,6 @@ public class ServerHandler implements Runnable {
     }
 
     private void httpResponseNotFound() throws IOException {
-        System.out.println("here");
         output.write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
         output.flush();
     }
