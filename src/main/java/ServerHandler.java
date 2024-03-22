@@ -75,7 +75,8 @@ public class ServerHandler implements Runnable {
             output.flush();
         } else {
             System.out.println("file doesnt exist");
-            this.httpResponseNotFound();
+            output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+            output.flush();
         }
 
     }
