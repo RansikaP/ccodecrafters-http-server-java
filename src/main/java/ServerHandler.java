@@ -30,7 +30,7 @@ public class ServerHandler implements Runnable {
                 this.httpResponseText(body);
             } else if (parser.getRequestURL().startsWith("/files")) {
                 String file = parser.getRequestURL().substring(7);
-                System.out.println(fileExists(file));
+                //System.out.println(fileExists(file));
             }
             else
                 this.httpResponseNotFound();
