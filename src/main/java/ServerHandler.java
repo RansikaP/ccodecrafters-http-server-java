@@ -33,13 +33,11 @@ public class ServerHandler implements Runnable {
                 this.httpResponseText(body);
             } else if (parser.getMethod().equals("GET") && parser.getRequestURL().startsWith("/files")) {
                 String file = parser.getRequestURL().substring(7);
-                System.out.println(file);
                 httpFileResponse(file);
-            } else if (parser.getMethod().equals("POST") && parser.getRequestURL().startsWith("/files")) {
+            } else if (parser.getMethod().equalsIgnoreCase("POST") && parser.getRequestURL().startsWith("/files")) {
                 System.out.println(parser.getParams());
                 System.out.println(parser.getHeaders());
-            }
-            else
+            } else
                 this.httpResponseNotFound();
         } catch (IOException e) {
             System.out.println("Could not start handler: " + e.getMessage());
