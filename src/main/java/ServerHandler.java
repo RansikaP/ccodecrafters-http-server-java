@@ -22,7 +22,6 @@ public class ServerHandler implements Runnable {
         try {
             HttpParser parser = new HttpParser(input);
             parser.parseRequest();
-            System.out.println(parser.getRequestURL());
 
             if (parser.getRequestURL().equals("/"))
                 this.httpResponseOK();
@@ -34,8 +33,7 @@ public class ServerHandler implements Runnable {
                 this.httpResponseText(body);
             } else if (parser.getRequestURL().startsWith("/files")) {
                 String file = parser.getRequestURL().substring(7);
-                if (fileExists(file))
-                    httpFileResponse(file);
+                httpFileResponse(file);
             }
             else
                 this.httpResponseNotFound();
@@ -62,10 +60,6 @@ public class ServerHandler implements Runnable {
         output.write(String.format("Content-Length: %d\r\n\r\n", body.length()).getBytes());
         output.write(body.getBytes());
         output.flush();
-    }
-
-    private boolean fileExists(String file) {
-        return new File(this.server.getDirectory(), file).exists();
     }
 
     private void httpFileResponse(String fileName) throws IOException {
