@@ -45,15 +45,17 @@ public class ServerHandler implements Runnable {
     }
 
     private void httpResponseOK() throws IOException {
-        output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+        output.write("HTTP/1.1 200 OK\r\n".getBytes());
+        output.write("Content-Type: text/plain\r\n".getBytes());
+        output.write(String.format("Content-Length: %d\r\n\r\n", 0).getBytes());
         output.flush();
     }
 
     private void httpResponseNotFound() throws IOException {
-        System.out.println("sending 404");
-        output.write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
+        output.write("HTTP/1.1 404 Not Found\r\n".getBytes());
+        output.write("Content-Type: text/plain\r\n".getBytes());
+        output.write(String.format("Content-Length: %d\r\n\r\n", 0).getBytes());
         output.flush();
-        System.out.println("sent 404");
     }
 
     private void httpResponseText(String body) throws IOException {
@@ -74,9 +76,7 @@ public class ServerHandler implements Runnable {
             output.write(content);
             output.flush();
         } else {
-            System.out.println("file doesnt exist");
-            output.write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
-            output.flush();
+            this.httpResponseNotFound();
         }
 
     }
