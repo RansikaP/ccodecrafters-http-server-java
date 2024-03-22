@@ -24,6 +24,12 @@ public class Server {
 
             if (parser.getRequestURL().equals("/"))
                 clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+            else if (parser.getRequestURL().contains("/echo")) {
+                clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n".getBytes());
+                clientSocket.getOutputStream().write("Content-Type: text/plain\r\n".getBytes());
+                clientSocket.getOutputStream().write(String.format("Content-Length: %d", parser.getRequestURL().substring(6).length()).getBytes());
+                clientSocket.getOutputStream().write(parser.getRequestURL().substring(6).getBytes());
+            }
             else
                 clientSocket.getOutputStream().write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
             clientSocket.getOutputStream().flush();
