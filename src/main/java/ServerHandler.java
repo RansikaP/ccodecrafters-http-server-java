@@ -68,7 +68,7 @@ public class ServerHandler implements Runnable {
         File file = new File(this.server.getDirectory(), fileName);
         if (file.exists()) {
             output.write("HTTP/1.1 200 OK\r\n".getBytes());
-            output.write("Content-Type: text/plain\r\n".getBytes());
+            output.write("Content-Type: application/octet-stream\r\n\r\n".getBytes());
             Scanner reader = new Scanner(file);
             while(reader.hasNextLine()) {
                 output.write(reader.nextLine().getBytes());
