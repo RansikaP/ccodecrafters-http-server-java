@@ -58,7 +58,7 @@ public class ServerHandler implements Runnable {
         output.flush();
     }
 
-    private boolean fileExists(String file) {
-        return new File(this.server.getDirectory(), file).exists();
-    }
+//    private boolean fileExists(String file) {
+//        return new File(this.server.getDirectory(), file).exists();
+//    }
 }
