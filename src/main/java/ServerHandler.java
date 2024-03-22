@@ -70,11 +70,12 @@ public class ServerHandler implements Runnable {
             output.write("HTTP/1.1 200 OK\r\n".getBytes());
             output.write("Content-Type: application/octet-stream\r\n\r\n".getBytes());
             Scanner reader = new Scanner(file);
-            while(reader.hasNextLine()) {
-                String line = reader.nextLine();
-                System.out.println(line);
-                output.write(line.getBytes());
-            }
+            output.write("file output".getBytes());
+//            while(reader.hasNextLine()) {
+//                String line = reader.nextLine();
+//                System.out.println(line);
+//                output.write(line.getBytes());
+//            }
             reader.close();
             output.flush();
         } else
