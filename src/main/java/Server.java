@@ -23,21 +23,36 @@ public class Server {
             parser.parseRequest();
 
             if (parser.getRequestURL().equals("/"))
-                clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                this.httpResponseOK();
             else if (parser.getRequestURL().startsWith("/echo")) {
-                clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n".getBytes());
-                clientSocket.getOutputStream().write("Content-Type: text/plain\r\n".getBytes());
-                clientSocket.getOutputStream().write(String.format("Content-Length: %d\r\n\r\n", parser.getRequestURL().substring(6).length()).getBytes());
-                clientSocket.getOutputStream().write(parser.getRequestURL().substring(6).getBytes());
+                String body = parser.getRequestURL().substring(6);
+                this.httpResponseText(body);
             } else if (parser.getRequestURL().startsWith("/user-agent")) {
                 String body = parser.getHeader("User-Agent");
-                System.out.println(body);
+                this.httpResponseText(body);
             }
             else
-                clientSocket.getOutputStream().write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
-            clientSocket.getOutputStream().flush();
+                this.httpResponseNotFound();
         } catch (IOException e) {
             System.out.println("Could not start server: " + e.getMessage());
         }
+    }
+
+    private void httpResponseOK() throws IOException {
+        clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+        clientSocket.getOutputStream().flush();
+    }
+
+    private void httpResponseNotFound() throws IOException {
+        clientSocket.getOutputStream().write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
+        clientSocket.getOutputStream().flush();
+    }
+
+    private void httpResponseText(String body) throws IOException {
+        clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n".getBytes());
+        clientSocket.getOutputStream().write("Content-Type: text/plain\r\n".getBytes());
+        clientSocket.getOutputStream().write(String.format("Content-Length: %d\r\n\r\n", body.length()).getBytes());
+        clientSocket.getOutputStream().write(body.getBytes());
+        clientSocket.getOutputStream().flush();
     }
 }
