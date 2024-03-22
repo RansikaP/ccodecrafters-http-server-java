@@ -24,6 +24,7 @@ public class Server {
             );
             while (reader.ready()) {
                 String input = reader.readLine();
+                System.out.println(input);
             }
             clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
             clientSocket.getOutputStream().flush();
