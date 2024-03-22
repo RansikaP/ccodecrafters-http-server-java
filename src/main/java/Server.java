@@ -27,7 +27,7 @@ public class Server {
             else if (parser.getRequestURL().contains("/echo")) {
                 clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n".getBytes());
                 clientSocket.getOutputStream().write("Content-Type: text/plain\r\n".getBytes());
-                clientSocket.getOutputStream().write(String.format("Content-Length: %d", parser.getRequestURL().substring(6).length()).getBytes());
+                clientSocket.getOutputStream().write(String.format("Content-Length: %d\r\n\r\n", parser.getRequestURL().substring(6).length()).getBytes());
                 clientSocket.getOutputStream().write(parser.getRequestURL().substring(6).getBytes());
             }
             else
