@@ -22,6 +22,7 @@ public class ServerHandler implements Runnable {
         try {
             HttpParser parser = new HttpParser(input);
             parser.parseRequest();
+            System.out.println(parser.getRequestURL());
 
             if (parser.getRequestURL().equals("/"))
                 this.httpResponseOK();
@@ -68,11 +69,8 @@ public class ServerHandler implements Runnable {
     }
 
     private void httpFileResponse(String fileName) throws IOException {
-        System.out.println("here");
         File file = new File(this.server.getDirectory(), fileName);
-        System.out.println("here");
         if (file.exists() && file.isFile()) {
-            System.out.println("file exists");
             byte[] content = Files.readAllBytes(file.toPath());
             output.write("HTTP/1.1 200 OK\r\n".getBytes());
             output.write("Content-Type: application/octet-stream\r\n".getBytes());
