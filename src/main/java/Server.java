@@ -22,7 +22,7 @@ public class Server {
             HttpParser parser = new HttpParser(clientSocket.getInputStream());
             parser.parseRequest();
 
-            System.out.println(parser.getParams());
+            System.out.println(parser.getRequestURL());
 
             clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
             clientSocket.getOutputStream().flush();
