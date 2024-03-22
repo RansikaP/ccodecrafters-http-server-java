@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Scanner;
 
 public class ServerHandler implements Runnable {
@@ -67,16 +68,12 @@ public class ServerHandler implements Runnable {
     private void httpFileResponse(String fileName) throws IOException {
         File file = new File(this.server.getDirectory(), fileName);
         if (file.exists()) {
+            byte[] content = Files.readAllBytes(file.toPath());
+
             output.write("HTTP/1.1 200 OK\r\n".getBytes());
-            output.write("Content-Type: application/octet-stream\r\n\r\n".getBytes());
-            Scanner reader = new Scanner(file);
-            output.write("file output".getBytes());
-//            while(reader.hasNextLine()) {
-//                String line = reader.nextLine();
-//                System.out.println(line);
-//                output.write(line.getBytes());
-//            }
-            reader.close();
+            output.write("Content-Type: application/octet-stream\r\n".getBytes());
+            output.write(String.format("Content-Length: %d\r\n\r\n", content.length).getBytes());
+            output.write(content);
             output.flush();
         } else
             this.httpResponseNotFound();
