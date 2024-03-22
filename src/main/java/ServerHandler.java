@@ -69,6 +69,7 @@ public class ServerHandler implements Runnable {
     private void httpFileResponse(String fileName) throws IOException {
         File file = new File(this.server.getDirectory(), fileName);
         if (file.exists() && file.isFile()) {
+            System.out.println("file exists");
             byte[] content = Files.readAllBytes(file.toPath());
             output.write("HTTP/1.1 200 OK\r\n".getBytes());
             output.write("Content-Type: application/octet-stream\r\n".getBytes());
