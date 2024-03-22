@@ -73,7 +73,7 @@ public class ServerHandler implements Runnable {
             while(reader.hasNextLine()) {
                 String line = reader.nextLine();
                 System.out.println(line);
-                output.write(reader.nextLine().getBytes());
+                output.write(line.getBytes());
             }
             reader.close();
             output.flush();
