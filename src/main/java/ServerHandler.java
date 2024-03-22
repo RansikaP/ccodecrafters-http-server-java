@@ -31,10 +31,13 @@ public class ServerHandler implements Runnable {
             } else if (parser.getRequestURL().startsWith("/user-agent")) {
                 String body = parser.getHeader("User-Agent");
                 this.httpResponseText(body);
-            } else if (parser.getRequestURL().startsWith("/files")) {
+            } else if (parser.getMethod().equals("GET") && parser.getRequestURL().startsWith("/files")) {
                 String file = parser.getRequestURL().substring(7);
                 System.out.println(file);
                 httpFileResponse(file);
+            } else if (parser.getMethod().equals("POST") && parser.getRequestURL().startsWith("/files")) {
+                System.out.println(parser.getParams());
+                System.out.println(parser.getHeaders());
             }
             else
                 this.httpResponseNotFound();
@@ -78,6 +81,9 @@ public class ServerHandler implements Runnable {
         } else {
             this.httpResponseNotFound();
         }
+    }
+
+    private void postFile() {
 
     }
 }
