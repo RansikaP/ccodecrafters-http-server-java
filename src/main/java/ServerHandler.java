@@ -68,7 +68,9 @@ public class ServerHandler implements Runnable {
     }
 
     private void httpFileResponse(String fileName) throws IOException {
+        System.out.println("here");
         File file = new File(this.server.getDirectory(), fileName);
+        System.out.println("here");
         if (file.exists() && file.isFile()) {
             System.out.println("file exists");
             byte[] content = Files.readAllBytes(file.toPath());
