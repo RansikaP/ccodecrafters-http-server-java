@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Server {
     private int port;
@@ -14,9 +16,14 @@ public class Server {
     }
 
     public void start() {
+        ExecutorService threads = Executors.newCachedThreadPool();
+
         try {
-            ServerHandler handler = new ServerHandler(clientSocket.getInputStream(), clientSocket.getOutputStream());
-            handler.run();
+            while (true) {
+                clientSocket = serverSocket.accept();
+                threads.submit(new ServerHandler(clientSocket.getInputStream(), clientSocket.getOutputStream()));
+            }
+
         } catch (IOException e) {
             System.out.println("Could not start server: " + e.getMessage());
         }
