@@ -19,12 +19,11 @@ public class Server {
 
     public void start() {
         try {
-            while (true) {
-                HttpParser parser = new HttpParser(clientSocket.getInputStream());
-                parser.parseRequest();
-                System.out.println(parser.getMethod());
-                break;
-            }
+            HttpParser parser = new HttpParser(clientSocket.getInputStream());
+            parser.parseRequest();
+
+            System.out.println(parser.getParams());
+
             clientSocket.getOutputStream().write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
             clientSocket.getOutputStream().flush();
         } catch (IOException e) {
