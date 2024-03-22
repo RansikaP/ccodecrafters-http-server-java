@@ -71,9 +71,11 @@ public class ServerHandler implements Runnable {
             output.write("Content-Type: application/octet-stream\r\n\r\n".getBytes());
             Scanner reader = new Scanner(file);
             while(reader.hasNextLine()) {
-                System.out.println(reader.nextLine());
+                String line = reader.nextLine();
+                System.out.println(reader);
                 output.write(reader.nextLine().getBytes());
             }
+            reader.close();
             output.flush();
         } else
             this.httpResponseNotFound();
