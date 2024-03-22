@@ -12,7 +12,6 @@ public class Server {
     public Server(int port) throws IOException {
         serverSocket = new ServerSocket(4221);
         serverSocket.setReuseAddress(true);
-        clientSocket = serverSocket.accept();
     }
 
     public void start() {
@@ -23,7 +22,6 @@ public class Server {
                 clientSocket = serverSocket.accept();
                 threads.submit(new ServerHandler(clientSocket.getInputStream(), clientSocket.getOutputStream()));
             }
-
         } catch (IOException e) {
             System.out.println("Could not start server: " + e.getMessage());
         }
