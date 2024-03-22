@@ -71,6 +71,7 @@ public class ServerHandler implements Runnable {
             output.write("Content-Type: application/octet-stream\r\n\r\n".getBytes());
             Scanner reader = new Scanner(file);
             while(reader.hasNextLine()) {
+                System.out.println(reader.nextLine());
                 output.write(reader.nextLine().getBytes());
             }
             output.flush();
