@@ -35,6 +35,7 @@ public class ServerHandler implements Runnable {
                 String file = parser.getRequestURL().substring(7);
                 httpFileResponse(file);
             } else if (parser.getMethod().equalsIgnoreCase("POST") && parser.getRequestURL().startsWith("/files")) {
+                System.out.println("here");
                 System.out.println(parser.getParams());
                 System.out.println(parser.getHeaders());
             } else
