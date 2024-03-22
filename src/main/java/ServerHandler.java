@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Scanner;
 
 public class ServerHandler implements Runnable {
     private InputStream input;
@@ -30,7 +31,8 @@ public class ServerHandler implements Runnable {
                 this.httpResponseText(body);
             } else if (parser.getRequestURL().startsWith("/files")) {
                 String file = parser.getRequestURL().substring(7);
-                System.out.println(fileExists(file));
+                if (fileExists(file))
+                    httpFileResponse(file);
             }
             else
                 this.httpResponseNotFound();
@@ -60,5 +62,19 @@ public class ServerHandler implements Runnable {
 
     private boolean fileExists(String file) {
         return new File(this.server.getDirectory(), file).exists();
+    }
+
+    private void httpFileResponse(String fileName) throws IOException {
+        File file = new File(this.server.getDirectory(), fileName);
+        if (file.exists()) {
+            output.write("HTTP/1.1 200 OK\r\n".getBytes());
+            output.write("Content-Type: text/plain\r\n".getBytes());
+            Scanner reader = new Scanner(file);
+            while(reader.hasNextLine()) {
+                output.write(reader.nextLine().getBytes());
+            }
+            output.flush();
+        } else
+            this.httpResponseNotFound();
     }
 }
