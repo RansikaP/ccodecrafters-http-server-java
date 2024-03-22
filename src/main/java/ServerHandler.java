@@ -37,6 +37,7 @@ public class ServerHandler implements Runnable {
         } catch (IOException e) {
             System.out.println("Could not start handler: " + e.getMessage());
         }
+
     }
 
     private void httpResponseOK() throws IOException {
