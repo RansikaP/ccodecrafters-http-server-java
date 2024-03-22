@@ -50,8 +50,10 @@ public class ServerHandler implements Runnable {
     }
 
     private void httpResponseNotFound() throws IOException {
+        System.out.println("sending 404");
         output.write("HTTP/1.1 404 Not Found\r\n\r\n".getBytes());
         output.flush();
+        System.out.println("sent 404");
     }
 
     private void httpResponseText(String body) throws IOException {
@@ -71,7 +73,10 @@ public class ServerHandler implements Runnable {
             output.write(String.format("Content-Length: %d\r\n\r\n", content.length).getBytes());
             output.write(content);
             output.flush();
-        } else
+        } else {
+            System.out.println("file doesnt exist");
             this.httpResponseNotFound();
+        }
+
     }
 }
