@@ -72,7 +72,7 @@ public class ServerHandler implements Runnable {
             Scanner reader = new Scanner(file);
             while(reader.hasNextLine()) {
                 String line = reader.nextLine();
-                System.out.println(reader);
+                System.out.println(line);
                 output.write(reader.nextLine().getBytes());
             }
             reader.close();
