@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ServerHandler implements Runnable {
@@ -69,7 +70,7 @@ public class ServerHandler implements Runnable {
         File file = new File(this.server.getDirectory(), fileName);
         if (file.exists()) {
             byte[] content = Files.readAllBytes(file.toPath());
-
+            System.out.println(Arrays.toString(content));
             output.write("HTTP/1.1 200 OK\r\n".getBytes());
             output.write("Content-Type: application/octet-stream\r\n".getBytes());
             output.write(String.format("Content-Length: %d\r\n\r\n", content.length).getBytes());
