@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -35,9 +32,9 @@ public class ServerHandler implements Runnable {
                 String file = parser.getRequestURL().substring(7);
                 httpFileResponse(file);
             } else if (parser.getMethod().equalsIgnoreCase("POST") && parser.getRequestURL().startsWith("/files")) {
-                System.out.println("here");
-                System.out.println(parser.getParams());
-                System.out.println(parser.getHeaders());
+                String file = parser.getRequestURL().substring(7);
+                String body = parser.getBody();
+                postFile(file, body);
             } else
                 this.httpResponseNotFound();
         } catch (IOException e) {
@@ -82,7 +79,10 @@ public class ServerHandler implements Runnable {
         }
     }
 
-    private void postFile() {
-
+    private void postFile(String fileName, String body) throws IOException {
+        File file = new File(this.server.getDirectory(), fileName);
+        FileWriter writer = new FileWriter(file);
+        writer.write(body);
+        writer.close();
     }
 }

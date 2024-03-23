@@ -183,7 +183,7 @@ public class HttpParser {
                 }
             }
             parseHeaders();
-            System.out.println(reader.readLine());
+            body = reader.readLine();
             if (headers == null) ret = 400;
         } else if (ver[0] == 1 && ver[1] >= 1) {
             if (cmd[0].equals("OPTIONS") ||
@@ -252,6 +252,8 @@ public class HttpParser {
     public String getVersion() {
         return ver[0] + "." + ver[1];
     }
+
+    public String getBody() { return this.body; }
 
     public int compareVersion(int major, int minor) {
         if (major < ver[0]) return -1;
