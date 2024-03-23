@@ -66,7 +66,7 @@ public class HttpParser {
             {"505", "HTTP Version Not Supported"}};
 
     private BufferedReader reader;
-    private String method, url;
+    private String method, url, body;
     private Hashtable headers, params;
     private int[] ver;
 
@@ -74,6 +74,7 @@ public class HttpParser {
         reader = new BufferedReader(new InputStreamReader(is));
         method = "";
         url = "";
+        body = "";
         headers = new Hashtable();
         params = new Hashtable();
         ver = new int[2];
@@ -159,7 +160,31 @@ public class HttpParser {
             parseHeaders();
             if (headers == null) ret = 400;
         } else if (cmd[0].equals("POST")) {
-            ret = 501; // not implemented
+            method = cmd[0];
+
+            idx = cmd[1].indexOf('?');
+            if (idx < 0) url = cmd[1];
+            else {
+                url = URLDecoder.decode(cmd[1].substring(0, idx), "ISO-8859-1");
+                prms = cmd[1].substring(idx + 1).split("&");
+
+                params = new Hashtable();
+                for (i = 0; i < prms.length; i++) {
+                    temp = prms[i].split("=");
+                    if (temp.length == 2) {
+                        // we use ISO-8859-1 as temporary charset and then
+                        // String.getBytes("ISO-8859-1") to get the data
+                        params.put(URLDecoder.decode(temp[0], "ISO-8859-1"),
+                                URLDecoder.decode(temp[1], "ISO-8859-1"));
+                    } else if (temp.length == 1 && prms[i].indexOf('=') == prms[i].length() - 1) {
+                        // handle empty string separatedly
+                        params.put(URLDecoder.decode(temp[0], "ISO-8859-1"), "");
+                    }
+                }
+            }
+            parseHeaders();
+            System.out.println(reader.readLine());
+            if (headers == null) ret = 400;
         } else if (ver[0] == 1 && ver[1] >= 1) {
             if (cmd[0].equals("OPTIONS") ||
                     cmd[0].equals("PUT") ||
