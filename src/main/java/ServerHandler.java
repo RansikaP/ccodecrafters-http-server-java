@@ -82,8 +82,11 @@ public class ServerHandler implements Runnable {
     private void postFile(String fileName, String body) throws IOException {
         File file = new File(this.server.getDirectory() + fileName);
         FileWriter writer = new FileWriter(file);
-        System.out.println(body);
         writer.write(body);
         writer.close();
+        output.write("HTTP/1.1 201 OK\r\n".getBytes());
+        output.write("Content-Type: text/plain\r\n".getBytes());
+        output.write(String.format("Content-Length: %d\r\n\r\n", 0).getBytes());
+        output.flush();
     }
 }
