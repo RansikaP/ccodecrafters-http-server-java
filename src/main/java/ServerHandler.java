@@ -87,7 +87,7 @@ public class ServerHandler implements Runnable {
         writer.close();
         output.write("HTTP/1.1 201 Created\r\n".getBytes());
         output.write("Content-Type: text/plain\r\n".getBytes());
-        output.write(String.format("Location: %s", file.getPath()).getBytes());
+        output.write(String.format("Location: %s\r\n", file.getPath()).getBytes());
         output.write(String.format("Content-Length: %d\r\n\r\n", 0).getBytes());
         output.flush();
     }
