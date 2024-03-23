@@ -83,6 +83,7 @@ public class ServerHandler implements Runnable {
         File file = new File(this.server.getDirectory() + fileName);
         FileWriter writer = new FileWriter(file);
         writer.write(body);
+        System.out.println("done writing file contents");
         writer.close();
         output.write("HTTP/1.1 201 OK\r\n".getBytes());
         output.write("Content-Type: text/plain\r\n".getBytes());
