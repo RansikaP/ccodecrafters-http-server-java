@@ -81,14 +81,21 @@ public class ServerHandler implements Runnable {
     }
 
     private void postFile(String fileName, String body) throws IOException {
+        byte[] content;
+        byte[] header;
+        byte[] reply;
+
         File file = new File(this.server.getDirectory() + fileName);
         FileWriter writer = new FileWriter(file);
         writer.write(body);
         System.out.println("done writing file contents");
         writer.close();
-        System.out.println("here1");
-        output.write(String.format("HTTP/1.1 201 Created\r\nLocation: %s\r\nContent-Type: text/plain\r\nContent-Length: 12\r\n\r\nfile created", file.getPath()).getBytes());
-        System.out.println("here2");
+        header = "HTTP/1.1 201 Created\r\n\r\n".getBytes();
+        content = new byte[0];
+        reply = new byte[header.length + content.length];
+        System.arraycopy(header, 0, reply, 0, header.length);
+        System.arraycopy(content, 0, reply, header.length, content.length);
+        output.write(reply);
 //        output.write("Content-Type: text/plain\r\n".getBytes());
 //        System.out.println("here3");
 //        //output.write(String.format("Location: %s\r\n", file.getPath()).getBytes());
