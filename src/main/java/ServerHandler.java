@@ -88,7 +88,7 @@ public class ServerHandler implements Runnable {
         writer.close();
         System.out.println("here1");
         output.write(String.format("HTTP/1.1 201 Created\r\nLocation: %s\r\nContent-Type: text/plain\r\nContent-Length: 12\r\n\r\nfile created", file.getPath()).getBytes());
-//        System.out.println("here2");
+        System.out.println("here2");
 //        output.write("Content-Type: text/plain\r\n".getBytes());
 //        System.out.println("here3");
 //        //output.write(String.format("Location: %s\r\n", file.getPath()).getBytes());
