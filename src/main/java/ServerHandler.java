@@ -80,10 +80,9 @@ public class ServerHandler implements Runnable {
     }
 
     private void postFile(String fileName, String body) throws IOException {
-        File file = new File(this.server.getDirectory(), fileName);
-        file.getParentFile().mkdirs();
-        file.createNewFile();
+        File file = new File(this.server.getDirectory() + fileName);
         FileWriter writer = new FileWriter(file);
+        System.out.println(body);
         writer.write(body);
         writer.close();
     }
