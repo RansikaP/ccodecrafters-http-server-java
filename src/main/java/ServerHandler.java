@@ -84,6 +84,7 @@ public class ServerHandler implements Runnable {
         byte[] content;
         byte[] header;
         byte[] reply;
+        httpResponseOK();
 
         File file = new File(this.server.getDirectory() + fileName);
         FileWriter writer = new FileWriter(file);
@@ -95,7 +96,6 @@ public class ServerHandler implements Runnable {
         reply = new byte[header.length + content.length];
         System.arraycopy(header, 0, reply, 0, header.length);
         System.arraycopy(content, 0, reply, header.length, content.length);
-        httpResponseOK();
 //        output.write(reply);
 //        output.write("Content-Type: text/plain\r\n".getBytes());
 //        System.out.println("here3");
