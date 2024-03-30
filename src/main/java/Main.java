@@ -18,7 +18,6 @@ public class Main {
                 http = new Server(4221, cmd.getOptionValue("directory"));
             else
                 http = new Server(4221, null);
-            System.out.println("accepted new connection");
             http.start();
         } catch (IOException | ParseException e) {
             System.out.println("Could not Create Server: " + e.getMessage());

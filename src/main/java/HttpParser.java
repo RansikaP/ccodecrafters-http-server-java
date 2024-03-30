@@ -183,18 +183,14 @@ public class HttpParser {
                 }
             }
             parseHeaders();
-            //body = reader.readLine();
-            System.out.println("reading body?");
-            int length = Integer.parseInt((String) headers.get("content-length"));
-            StringBuilder body1 = new StringBuilder();
+            int bodyLength = Integer.parseInt((String) headers.get("content-length"));
+            StringBuilder bodyBuilder = new StringBuilder();
             int character;
-            for (int j = 0; j < length; j++) {
+            for (int j = 0; j < bodyLength; j++) {
                 character = reader.read();
-                body1.append((char) character);
+                bodyBuilder.append((char) character);
             }
-            body = body1.toString();
-            System.out.println("Body:\n" + body1.toString());
-            //System.out.println(reader.readLine());
+            body = bodyBuilder.toString();
             if (headers == null) ret = 400;
         } else if (ver[0] == 1 && ver[1] >= 1) {
             if (cmd[0].equals("OPTIONS") ||
