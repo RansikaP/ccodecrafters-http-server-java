@@ -186,8 +186,13 @@ public class HttpParser {
             //body = reader.readLine();
             System.out.println("reading body?");
             StringBuilder body1 = new StringBuilder();
-            while (reader.ready()) {
-                body1.append((char) reader.read());
+            int character;
+            while ((character = reader.read()) != -1) {
+                // Check for null character and break the loop if encountered
+                if (character == '\0') {
+                    break;
+                }
+                body1.append((char) character);
             }
             System.out.println("Body:\n" + body1.toString());
             //System.out.println(reader.readLine());
