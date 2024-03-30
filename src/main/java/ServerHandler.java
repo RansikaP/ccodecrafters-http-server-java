@@ -86,5 +86,9 @@ public class ServerHandler implements Runnable {
         writer.write(body);
         System.out.println("done writing file contents");
         writer.close();
+        output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+//        output.write("Content-Type: text/plain\r\n".getBytes());
+//        output.write(String.format("Content-Length: %d\r\n\r\n", 0).getBytes());
+        output.flush();
     }
 }
