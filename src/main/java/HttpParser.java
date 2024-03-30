@@ -185,15 +185,14 @@ public class HttpParser {
             parseHeaders();
             //body = reader.readLine();
             System.out.println("reading body?");
+            int length = Integer.parseInt((String) headers.get("content-length"));
             StringBuilder body1 = new StringBuilder();
             int character;
-            while ((character = reader.read()) != -1) {
-                // Check for null character and break the loop if encountered
-                if (character == '7') {
-                    break;
-                }
+            for (int j = 0; j < length; j++) {
+                character = reader.read();
                 body1.append((char) character);
             }
+            body = body1.toString();
             System.out.println("Body:\n" + body1.toString());
             //System.out.println(reader.readLine());
             if (headers == null) ret = 400;
