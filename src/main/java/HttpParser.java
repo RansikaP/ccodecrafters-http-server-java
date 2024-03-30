@@ -184,6 +184,7 @@ public class HttpParser {
             }
             parseHeaders();
             body = reader.readLine();
+            System.out.println(body);
             if (headers == null) ret = 400;
         } else if (ver[0] == 1 && ver[1] >= 1) {
             if (cmd[0].equals("OPTIONS") ||
