@@ -20,7 +20,7 @@ public class ServerHandler implements Runnable {
         try {
             HttpParser parser = new HttpParser(input);
             parser.parseRequest();
-
+            System.out.println("here");
             if (parser.getRequestURL().equals("/"))
                 this.httpResponseOK();
             else if (parser.getRequestURL().startsWith("/echo")) {
@@ -38,6 +38,7 @@ public class ServerHandler implements Runnable {
                 postFile(file, body);
             } else
                 this.httpResponseNotFound();
+            System.out.println("here");
         } catch (IOException e) {
             System.out.println("Could not start handler: " + e.getMessage());
             e.printStackTrace();
@@ -82,13 +83,14 @@ public class ServerHandler implements Runnable {
     }
 
     private void postFile(String fileName, String body) throws IOException {
-//        File file = new File(this.server.getDirectory() + fileName);
-//        FileWriter writer = new FileWriter(file);
-//        writer.write(body);
-//        writer.close();
+        File file = new File(this.server.getDirectory() + fileName);
+        System.out.println(this.server.getDirectory());
+        FileWriter writer = new FileWriter(file);
+        writer.write(body);
+        writer.close();
 //        output.write("Content-Type: text/plain\r\n".getBytes());
 //        output.write(String.format("Content-Length: %d\r\n\r\n", 0).getBytes());
-        output.write("HTTP/1.1 201 Created\r\n\r\n".getBytes(StandardCharsets.UTF_8));
-        output.flush();
+//        output.write("HTTP/1.1 201 Created\r\n\r\n".getBytes());
+//        output.flush();
     }
 }
