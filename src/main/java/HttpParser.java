@@ -189,7 +189,7 @@ public class HttpParser {
             int character;
             while ((character = reader.read()) != -1) {
                 // Check for null character and break the loop if encountered
-                if (character == '\0') {
+                if (character == '7') {
                     break;
                 }
                 body1.append((char) character);
