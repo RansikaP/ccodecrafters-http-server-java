@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -81,7 +82,7 @@ public class ServerHandler implements Runnable {
     }
 
     private void postFile(String fileName, String body) throws IOException {
-        output.write("HTTP/1.1 201 Created\r\n\r\n".getBytes());
+        output.write("HTTP/1.1 201 Created\r\n\r\n".getBytes(StandardCharsets.UTF_8));
         output.flush();
         File file = new File(this.server.getDirectory() + fileName);
         FileWriter writer = new FileWriter(file);
