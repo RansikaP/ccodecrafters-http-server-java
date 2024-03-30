@@ -95,13 +95,14 @@ public class ServerHandler implements Runnable {
         reply = new byte[header.length + content.length];
         System.arraycopy(header, 0, reply, 0, header.length);
         System.arraycopy(content, 0, reply, header.length, content.length);
-        output.write(reply);
+        httpResponseOK();
+//        output.write(reply);
 //        output.write("Content-Type: text/plain\r\n".getBytes());
 //        System.out.println("here3");
 //        //output.write(String.format("Location: %s\r\n", file.getPath()).getBytes());
 //        System.out.println("here4");
 //        output.write("Content-Length: %d\r\n\r\n".getBytes());
 //        System.out.println("here5");
-        output.flush();
+        //output.flush();
     }
 }
